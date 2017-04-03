@@ -1,3 +1,5 @@
+require "vbms"
+
 class Dispatch
   class InvalidClaimError < StandardError; end
   class EndProductAlreadyExistsError < StandardError; end

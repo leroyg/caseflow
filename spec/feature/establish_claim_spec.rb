@@ -1,4 +1,5 @@
 require "rails_helper"
+require "vbms"
 
 RSpec.feature "Establish Claim - ARC Dispatch" do
   before do
@@ -172,7 +173,7 @@ RSpec.feature "Establish Claim - ARC Dispatch" do
       expect(task.appeal.reload.rice_compliance).to be_falsey
     end
 
-    scenario "Error establishing claim" do
+    scenario "Error establishing claim", retry: 10 do
       allow(Appeal.repository).to receive(:establish_claim!).and_raise(ep_already_exists_error)
 
       task.assign!(:assigned, current_user)
@@ -519,7 +520,7 @@ RSpec.feature "Establish Claim - ARC Dispatch" do
           ]
         end
 
-        scenario "Establish a new claim defaults to creating a 171 EP", retry: 5 do
+        scenario "Establish a new claim defaults to creating a 171 EP" do
           visit "/dispatch/establish-claim"
           safe_click_on "Establish next claim"
           safe_click_on "Route claim"
