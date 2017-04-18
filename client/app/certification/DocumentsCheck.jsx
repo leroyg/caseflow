@@ -17,6 +17,26 @@ class UnconnectedDocumentsCheck extends React.Component {
     this.props.updateProgressBar();
   }
 
+  /*
+   * This function acts as a router for the page. Statuses 'started' and
+   * 'mismatched_documents' go to 'check_documents'. Status 'already_certified'
+   * goes to 'already_certified'. Status 'data_missing' goes to 'not_ready'. Any
+   * unrecognized statuses also to go 'not_ready', but will throw a warning in the
+   * console.
+   */
+  documentCheckPage() {
+    if (["started", "mismatched_documents"].includes(this.props.certificationStatus)) {
+      return "check_documents";
+    } else if (this.props.certificationStatus === "already_certified") {
+      return "already_certified";
+    }
+    if (this.props.certificationStatus !== "data_missing") {
+      console.warn('Unknown certification status');
+    }
+
+    return "not_ready";
+  }
+
   render() {
 
     let { certificationStatus,
@@ -43,6 +63,9 @@ class UnconnectedDocumentsCheck extends React.Component {
      * certificationStatus == 'mismatched_documents' or 'started'
      */
     return <div>
+      { this.documentCheckPage() === "not_ready" && <NotReady/> }
+      { this.documentCheckPage() === "already_certified" && <AlreadyCertified/>}
+      { this.documentCheckPage() === "check_documents" && <div>
       <div className="cf-app-segment cf-app-segment--alt">
         <h2>Check Documents</h2>
         { documentsMatch ? <DocumentsMatchingBox/> : <DocumentsNotMatchingBox/> }
@@ -56,13 +79,16 @@ class UnconnectedDocumentsCheck extends React.Component {
           documentsMatch={documentsMatch}/>
       </div>
 
-      <Footer
-        nextPageUrl={
-          `/certifications/${match.params.vacols_id}/confirm_case_details`
-        }
-        certificationId={certificationId}
-        hideContinue={!documentsMatch}/>
-    </div>;
+      <div className="cf-app-segment">
+        <Footer
+          nextPageUrl={
+            `/certifications/${match.params.vacols_id}/confirm_case_details`
+          }
+          certificationId={certificationId}
+          hideContinue={!documentsMatch}/>
+      </div>
+    </div> }
+  </div>;
   }
 }
 
