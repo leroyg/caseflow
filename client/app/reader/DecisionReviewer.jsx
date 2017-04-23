@@ -246,6 +246,11 @@ export class DecisionReviewer extends React.Component {
       reduce((anySelected, label) =>
         anySelected || this.state.selectedLabels[label], false);
 
+    const doesItContainText = (objects, key, text) => {
+      return objects.some((obj) => obj[key].
+      toLowerCase().includes(text));
+    };
+
     let filteredDocuments = documents.filter((doc) => {
       // if there is a label selected, we filter on that.
       if (labelsSelected && !this.state.selectedLabels[doc.label]) {
@@ -261,11 +266,6 @@ export class DecisionReviewer extends React.Component {
       if (this.metadataContainsString(doc, filterBy)) {
         return true;
       }
-
-      const doesItContainText = (objects, key, text) => {
-        return objects.some((obj) => obj[key].
-        toLowerCase().includes(text));
-      };
 
       if (doesItContainText(doc.tags, 'text', filterBy)) {
         return true;
