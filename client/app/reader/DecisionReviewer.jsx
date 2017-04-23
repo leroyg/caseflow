@@ -158,7 +158,7 @@ export class DecisionReviewer extends React.Component {
   sortAndFilter = () => {
     this.setState({
       documents: this.filterDocuments(
-        this.sortDocuments(this.state.unsortedDocuments))
+        this.sortDocuments(_.values(this.props.storeDocuments)))
     });
   }
 
@@ -262,8 +262,16 @@ export class DecisionReviewer extends React.Component {
         return true;
       }
 
-      if (annotations.some((annotation) => annotation.comment.
-        toLowerCase().includes(filterBy))) {
+      const doesItContainText = (objects, key, text) => {
+        return objects.some((obj) => obj[key].
+        toLowerCase().includes(text));
+      };
+
+      if (doesItContainText(doc.tags, 'text', filterBy)) {
+        return true;
+      }
+
+      if (doesItContainText(annotations, 'comment', filterBy)) {
         return true;
       }
 
