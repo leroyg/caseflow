@@ -109,8 +109,15 @@ export class PdfListView extends React.Component {
             className="document-list-header-issue-tags">
             Issue Tags {filterIcon}
           </div>,
-          valueFunction: () => {
+          valueFunction: (doc) => {
+            const tags = doc.tags || [];
+
             return <div className="document-list-issue-tags">
+              {tags.map((tag) => {
+                return <div className="document-list-issue-tag" key={tag.id}>
+                  {tag.text}
+                </div>;
+              })}
             </div>;
           }
         },
