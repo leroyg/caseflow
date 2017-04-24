@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const MAX_WIDTH = 225;
 const MAX_ASSUMED_ROWS_FOR_ONE_TAG = 2;
-const MAX_SHOWN_ROWS = 3;
+const MAX_SHOWN_ROWS = 2;
 
 const getTagsRowFormat = (widths) => {
   const arrWidths = _.values(widths);
@@ -140,7 +140,7 @@ export default class TagTableColumn extends React.Component {
           </div>
         </Measure>;
       })}
-      {showMoreDiv}
+      <br/>{showMoreDiv}
     </div>;
   }
 }
