@@ -9,6 +9,8 @@ import Button from '../components/Button';
 import { linkToSingleDocumentView } from '../components/PdfUI';
 import DocumentCategoryIcons from '../components/DocumentCategoryIcons';
 import DocumentListHeader from '../components/reader/DocumentListHeader';
+import TagTableColumn from '../components/reader/TagTableColumn';
+
 import * as Constants from './constants';
 
 const NUMBER_OF_COLUMNS = 5;
@@ -110,15 +112,7 @@ export class PdfListView extends React.Component {
             Issue Tags {filterIcon}
           </div>,
           valueFunction: (doc) => {
-            const tags = doc.tags || [];
-
-            return <div className="document-list-issue-tags">
-              {tags.map((tag) => {
-                return <div className="document-list-issue-tag" key={tag.id}>
-                  {tag.text}
-                </div>;
-              })}
-            </div>;
+            return <TagTableColumn tags={doc.tags || []} />;
           }
         },
         {
