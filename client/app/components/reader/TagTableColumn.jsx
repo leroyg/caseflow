@@ -31,17 +31,17 @@ const getTagsRowFormat = (widths) => {
     } else if ((arrWidths[i] + arrWidths[i + 1]) < MAX_WIDTH) {
       let indx = i;
       let totalWidth = 0;
-      let indicies = [];
+      let indices = [];
 
       // get all the tags this row can hold
       while (indx < arrWidths.length &&
         (totalWidth + arrWidths[indx]) < MAX_WIDTH) {
         totalWidth += arrWidths[indx];
-        indicies.push(indx);
+        indices.push(indx);
         indx += 1;
       }
 
-      rows[rowNum] = indicies;
+      rows[rowNum] = indices;
       rowNum += 1;
 
       // decrementing indx because it was incremented in the
@@ -59,16 +59,16 @@ const getTagsRowFormat = (widths) => {
   return rows;
 };
 
-const getIndiciesToHide = (rows) => {
-  let hiddenIndicies = [];
+const getindicesToHide = (rows) => {
+  let hiddenindices = [];
 
   _.forOwn(rows, (value, key) => {
     if (key > MAX_SHOWN_ROWS) {
-      hiddenIndicies = _.union(hiddenIndicies, rows[key]);
+      hiddenindices = _.union(hiddenindices, rows[key]);
     }
   });
 
-  return hiddenIndicies;
+  return hiddenindices;
 };
 
 export default class TagTableColumn extends React.Component {
@@ -103,12 +103,12 @@ export default class TagTableColumn extends React.Component {
     </a>;
   };
 
-  getTagClassName = (indicies, index) => {
+  getTagClassName = (indices, index) => {
     if (this.state.showAllTags) {
       return 'document-list-issue-tag';
     }
 
-    return _.includes(indicies, index) ? 'hidden' : 'document-list-issue-tag';
+    return _.includes(indices, index) ? 'hidden' : 'document-list-issue-tag';
   };
 
   render() {
@@ -125,7 +125,7 @@ export default class TagTableColumn extends React.Component {
       showMoreDiv = this.getShowMoreLink();
     }
 
-    let hiddenTagIndicies = getIndiciesToHide(rows);
+    let hiddenTagindices = getindicesToHide(rows);
 
     return <div className="document-list-issue-tags">
       {tags.map((tag, index) => {
@@ -135,7 +135,7 @@ export default class TagTableColumn extends React.Component {
           }}
           key={index}
         >
-          <div className={this.getTagClassName(hiddenTagIndicies, index)}>
+          <div className={this.getTagClassName(hiddenTagindices, index)}>
             {`${tag.text}`}
           </div>
         </Measure>;
