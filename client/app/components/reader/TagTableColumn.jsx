@@ -91,9 +91,9 @@ export default class TagTableColumn extends React.Component {
   }
 
   getShowMoreLink = () => {
-    const tagText = this.state.showAllTags ? 'Show Less' : 'Show More';
+    const tagText = this.state.showAllTags ? 'See Less...' : 'See More...';
 
-    return <a href="#" onClick={(element) => {
+    return <a className="see-more-link-toggle" href="#" onClick={(element) => {
       element.preventDefault();
       this.setState((prevState) => {
         return { showAllTags: !prevState.showAllTags };
@@ -140,7 +140,7 @@ export default class TagTableColumn extends React.Component {
           </div>
         </Measure>;
       })}
-      <br />{showMoreDiv}
+      {showMoreDiv}
     </div>;
   }
 }
