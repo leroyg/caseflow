@@ -26,7 +26,7 @@ const getTagsRowFormat = (widths) => {
       rows[rowNum] = [i];
       rowNum += 1;
 
-    // if two elements alongside each other have combined with less
+    // if two elements alongside each other have combined less
     // than max width, this row can fit more than one tag
     } else if ((arrWidths[i] + arrWidths[i + 1]) < MAX_WIDTH) {
       let indx = i;
