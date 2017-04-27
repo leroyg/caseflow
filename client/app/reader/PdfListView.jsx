@@ -291,21 +291,29 @@ export class PdfListView extends React.Component {
     return <div className="usa-grid">
       <div className="cf-app">
         <div className="cf-app-segment cf-app-segment--alt">
-          <DocumentListHeader
-            documents={this.props.documents}
-            onFilter={this.props.onFilter}
-            filterBy={this.props.filterBy}
-            numberOfDocuments={this.props.numberOfDocuments}
-          />
-          <div>
-            <Table
+          <div className="cf-sticky-header">
+            <DocumentListHeader
+              documents={this.props.documents}
+              onFilter={this.props.onFilter}
+              filterBy={this.props.filterBy}
+              numberOfDocuments={this.props.numberOfDocuments}
+            />
+            {/*<Table
               columns={this.getDocumentColumns()}
-              rowObjects={rowObjects}
+              rowObjects={[]}
               summary="Document list"
               headerClassName="cf-document-list-header-row"
               rowsPerRowObject={2}
-            />
+            />*/}
           </div>
+          <Table
+            columns={this.getDocumentColumns()}
+            rowObjects={rowObjects}
+            summary="Document list"
+            headerClassName="cf-document-list-header-row"
+            rowsPerRowObject={2}
+            stickyHeader={true}
+          />
         </div>
       </div>
     </div>;

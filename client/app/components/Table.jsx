@@ -19,6 +19,20 @@ import _ from 'lodash';
  * see StyleGuideTables.jsx for usage example.
 */
 export default class Table extends React.Component {
+  constructor(props) {
+    super(props);
+    this.cols = [];
+  }
+  componentDidUpdate = () => {
+    if (this.props.stickyHeader) {
+      debugger;
+      // this.setState({
+
+      // })
+    }
+  }
+
+
   render() {
     let {
       columns,
@@ -82,7 +96,12 @@ export default class Table extends React.Component {
           <td
             key={columnNumber}
             className={cellClasses(column)}
-            colSpan={getCellSpan(props.rowObject, column)}>
+            colSpan={getCellSpan(props.rowObject, column)}
+            ref={(col) => {
+              if (props.rowNumber === 0) {
+                this.cols.push(col);
+              }
+            }}>
             {props.footer ?
               column.footer :
               getCellValue(props.rowObject, props.rowNumber, column)}
@@ -111,6 +130,25 @@ export default class Table extends React.Component {
       </tfoot>;
     };
 
+    if (this.props.stickyHeader) {
+      return <div>
+        <table
+          id={id}
+          className="usa-table-borderless cf-table-borderless"
+          summary={summary} >
+
+          <HeaderRow columns={columns} />
+        </table>
+        <table
+          id={id}
+          className="usa-table-borderless cf-table-borderless"
+          summary={summary} >
+
+          <BodyRows columns={columns} rowObjects={rowObjects} />
+          <FooterRow columns={columns} />
+        </table>
+      </div>
+    }
     return <table
               id={id}
               className="usa-table-borderless cf-table-borderless"
@@ -130,5 +168,6 @@ Table.propTypes = {
   rowObjects: PropTypes.arrayOf(PropTypes.object).isRequired,
   summary: PropTypes.string.isRequired,
   headerClassName: PropTypes.string,
+  stickyHeader: PropTypes.bool,
   id: PropTypes.string
 };
