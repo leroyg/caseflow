@@ -115,6 +115,8 @@ $tag-backgrond-color: #d6d7d9;
   }
 
   .cf-dropdown-filter {
+    min-width: 200px;
+    min-height: 200px;
     position: absolute;
     border: 1px solid $color-gray-lighter;
     background: $color-white;
