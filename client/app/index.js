@@ -8,11 +8,15 @@ import _ from 'lodash';
 import BaseContainer from './containers/BaseContainer';
 import Certification from './certification/Certification';
 import ManageEstablishClaim from './manageEstablishClaim/index';
+import Hearings from './hearings/Hearings';
+import HearingDockets from './hearings/Dockets';
 
 const COMPONENTS = {
   BaseContainer,
   Certification,
-  ManageEstablishClaim
+  ManageEstablishClaim,
+  Hearings,
+  HearingDockets
 };
 
 // This removes HMR's stupid red error page, which "eats" the errors and
@@ -36,7 +40,8 @@ const componentWrapper = (component) => (props, railsContext, domNodeId) => {
     module.hot.accept([
       './containers/BaseContainer',
       './certification/Certification',
-      './manageEstablishClaim/ManageEstablishClaim'
+      './manageEstablishClaim/ManageEstablishClaim',
+      './hearings/Dockets'
     ], () => renderApp(component));
   }
 };
@@ -44,4 +49,3 @@ const componentWrapper = (component) => (props, railsContext, domNodeId) => {
 _.forOwn(COMPONENTS, (component, name) => {
   ReactOnRails.register({ [name]: componentWrapper(component) });
 });
-

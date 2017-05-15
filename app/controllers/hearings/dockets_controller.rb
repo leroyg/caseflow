@@ -1,5 +1,5 @@
 class Hearings::DocketsController < ApplicationController
-  before_action :verify_access
+  before_action :verify_access, :set_application
 
   private
 
@@ -23,5 +23,9 @@ class Hearings::DocketsController < ApplicationController
 
   def verify_access
     verify_authorized_roles("Hearings")
+  end
+
+  def set_application
+    RequestStore.store[:application] = "hearings"
   end
 end

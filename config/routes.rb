@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   get 'help' => 'help#index'
   get 'dispatch/help' => 'help#dispatch'
   get 'certification/help' => 'help#certification'
+  get 'hearings/help' => 'help#hearings'
 
 
   # alias root to help; make sure to keep this below the canonical route so url_for works
