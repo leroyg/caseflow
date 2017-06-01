@@ -54,6 +54,15 @@ export class PdfUI extends React.Component {
     });
   }
 
+  getNextPdfDocument = () => {
+    if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) && this.state.numPages) {
+      return <div className="cf-pdf-next-document">
+        <p>You are now entering the next document.</p>
+      </div>
+    }
+    return '';
+  }
+
   getPdfFooter = () => {
     if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) && this.state.numPages) {
       const currentDocIndex = this.props.filteredDocIds.indexOf(this.props.doc.id);
@@ -187,6 +196,7 @@ export class PdfUI extends React.Component {
           onCommentScrolledTo={this.props.onCommentScrolledTo}
         />
       </div>
+      { this.getNextPdfDocument(this.props, this.state) }
       { this.getPdfFooter(this.props, this.state) }
     </div>;
   }
