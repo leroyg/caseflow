@@ -480,8 +480,18 @@ input[type="search"].cf-search-input-with-close {
   text-align: center;
 }
 
-.cf-pdf-next-document {
+.cf-pdf-next-previous-document {
   background-color: $color-primary-alt-lightest;
   padding-left: 40px;
   padding-right: 40px;
+  position: absolute;
+  z-index: 15;
+  opacity: 1;
+  bottom: 50px;
+  display: flex;
+  height: 40px;
+  width: 100%;
+  p {
+    margin-top: 10px;
+  }
 }
