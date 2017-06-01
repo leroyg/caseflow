@@ -49,7 +49,7 @@ export class PdfUI extends React.Component {
     if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) &&
         (this.state.currentPage === 1)) {
       return <div className="cf-pdf-next-previous-document">
-        <p>You are now entering the previous document.</p>
+        <p>You are now entering the previous document, <b>{this.props.prevDocType}</b></p>
       </div>
     }
     return '';
@@ -64,7 +64,7 @@ export class PdfUI extends React.Component {
     if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) &&
         (this.state.currentPage === this.state.numPages)) {
       return <div className="cf-pdf-next-previous-document">
-        <p>You are now entering the next document, <b>{this.props.nextDocId}</b>.</p>
+        <p>You are now entering the next document, <b>{this.props.nextDocType}</b></p>
       </div>
     }
     return '';

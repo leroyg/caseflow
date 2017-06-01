@@ -71,6 +71,8 @@ export class PdfViewer extends React.Component {
 
   prevDocId = () => _.get(this.props.documents, [this.selectedDocIndex() - 1, 'id'])
   nextDocId = () => _.get(this.props.documents, [this.selectedDocIndex() + 1, 'id'])
+  prevDocType = () => _.get(this.props.documents, [this.selectedDocIndex() - 1, 'type'])
+  nextDocType = () => _.get(this.props.documents, [this.selectedDocIndex() + 1, 'type'])
 
   getPrefetchFiles = () => _.compact([
     this.prevDocId(),
@@ -106,6 +108,8 @@ export class PdfViewer extends React.Component {
             onShowList={this.props.onShowList}
             prevDocId={this.prevDocId()}
             nextDocId={this.nextDocId()}
+            prevDocType={this.prevDocType()}
+            nextDocType={this.nextDocType()}
             showPdf={this.props.showPdf}
             showDocumentsListNavigation={this.showDocumentsListNavigation()}
             onViewPortCreated={this.onViewPortCreated}
