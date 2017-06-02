@@ -45,13 +45,14 @@ export class PdfUI extends React.Component {
     });
   }
 
-  getPreviousPdfDocument = () => {
+  getPrevPdfDocument = () => {
     if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) &&
         (this.state.currentPage === 1)) {
-      return <div className="cf-pdf-next-previous-document">
+      return <div className="cf-pdf-banner cf-pdf-prev-document">
         <p>You are now entering the previous document, <b>{this.props.prevDocType}</b></p>
-      </div>
+      </div>;
     }
+
     return '';
   }
 
@@ -63,10 +64,11 @@ export class PdfUI extends React.Component {
   getNextPdfDocument = () => {
     if (_.get(this.props.pdfsReadyToShow, this.props.doc.id) &&
         (this.state.currentPage === this.state.numPages)) {
-      return <div className="cf-pdf-next-previous-document">
+      return <div className="cf-pdf-banner cf-pdf-next-document">
         <p>You are now entering the next document, <b>{this.props.nextDocType}</b></p>
-      </div>
+      </div>;
     }
+
     return '';
   }
 
@@ -209,6 +211,7 @@ export class PdfUI extends React.Component {
           onCommentScrolledTo={this.props.onCommentScrolledTo}
         />
       </div>
+      { this.getPrevPdfDocument(this.props, this.state) }
       { this.getNextPdfDocument(this.props, this.state) }
       { this.getPdfFooter(this.props, this.state) }
     </div>;
