@@ -227,6 +227,14 @@ export class Pdf extends React.PureComponent {
       }
     });
     this.renderInViewPages();
+
+    if (this.scrollWindow.scrollTop === 0) {
+      this.props.showPdf(this.props.prevDocId)()
+    }
+    else if (this.scrollWindow.clientHeight + this.scrollWindow.scrollTop === this.scrollWindow.scrollHeight) {
+      this.props.showPdf(this.props.nextDocId)()
+    }
+    // console.log("bottom ", this.scrollWindow.clientHeight, this.scrollWindow.scrollTop);
   }
 
   renderInViewPages = () => {
@@ -586,7 +594,7 @@ export class Pdf extends React.PureComponent {
     return <div
       id="scrollWindow"
       className="cf-pdf-scroll-view"
-      onScroll={_.debounce(this.scrollEvent, 0)}
+      onScroll={this.scrollEvent}
       ref={this.getScrollWindowRef}>
       {prerenderCanvases}
         <div
@@ -635,6 +643,8 @@ Pdf.propTypes = {
   })),
   documentId: PropTypes.number.isRequired,
   file: PropTypes.string.isRequired,
+  nextDocId: PropTypes.number,
+  prevDocId: PropTypes.number,
   pdfWorker: PropTypes.string.isRequired,
   scale: PropTypes.number,
   onPageChange: PropTypes.func,
@@ -644,6 +654,7 @@ Pdf.propTypes = {
     page: PropTypes.number,
     y: PropTypes.number
   }),
+  showPdf: PropTypes.func,
   onIconMoved: PropTypes.func,
   setPdfReadyToShow: PropTypes.func,
   prefetchFiles: PropTypes.arrayOf(PropTypes.string),

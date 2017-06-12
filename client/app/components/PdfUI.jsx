@@ -209,6 +209,9 @@ export class PdfUI extends React.Component {
           onPageChange={this.onPageChange}
           prefetchFiles={this.props.prefetchFiles}
           onCommentScrolledTo={this.props.onCommentScrolledTo}
+          prevDocId={this.props.prevDocId}
+          nextDocId={this.props.nextDocId}
+          showPdf={this.props.showPdf}
         />
       </div>
       { this.getPrevPdfDocument(this.props, this.state) }
