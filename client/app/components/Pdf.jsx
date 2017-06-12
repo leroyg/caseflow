@@ -242,7 +242,12 @@ export class Pdf extends React.PureComponent {
     else if (this.scrollWindow.clientHeight + this.scrollWindow.scrollTop === this.scrollWindow.scrollHeight) {
       this.props.showPdf(this.props.nextDocId)()
     }
-    // console.log("bottom ", this.scrollWindow.clientHeight, this.scrollWindow.scrollTop);
+
+    // if (this.scrollWindow.scrollTop === this.scrollWindow.scrollHeight - 400) {
+    //   console.log("hi");
+    // }
+    // console.log("height of window ", this.scrollWindow.clientHeight, "height of content ",
+    //   this.scrollWindow.scrollTop, "height of current content ", this.scrollWindow.scrollHeight);
   }
 
   renderInViewPages = () => {
