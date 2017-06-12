@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '../components/Button';
+import PdfUIPageNumInput from '../reader/PdfUIPageNumInput';
 import Pdf from '../components/Pdf';
 import DocumentCategoryIcons from '../components/DocumentCategoryIcons';
 import { connect } from 'react-redux';
 import * as Constants from '../reader/constants';
-import { selectCurrentPdf, stopPlacingAnnotation } from '../reader/actions';
+import { selectCurrentPdf, stopPlacingAnnotation, resetJumpToPage } from '../reader/actions';
 import { docListIsFiltered } from '../reader/selectors';
-import { DownloadIcon, FilterIcon, ArrowLeft, ArrowRight } from '../components/RenderFunctions';
+import { DownloadIcon, FilterIcon, ArrowLeft, ArrowRight, LeftChevron } from '../components/RenderFunctions';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { openDocumentInNewTab } from '../reader/utils';
@@ -33,10 +34,14 @@ export class PdfUI extends React.Component {
       numPages: null
     };
   }
+
   componentDidUpdate(prevProps) {
     // when a document changes, remove annotation state
-    if (prevProps.doc.id !== this.props.doc.id && this.props.isPlacingAnnotation) {
-      this.props.stopPlacingAnnotation();
+    if (prevProps.doc.id !== this.props.doc.id) {
+      if (this.props.isPlacingAnnotation) {
+        this.props.stopPlacingAnnotation();
+      }
+      this.props.resetJumpToPage();
     }
   }
   zoom = (delta) => () => {
@@ -88,7 +93,14 @@ export class PdfUI extends React.Component {
             </Button>
           </div> }
         <div className="cf-pdf-buttons-center">
-          <span className="page-progress-indicator">Page {this.state.currentPage} of {this.state.numPages}</span>
+          <span className="page-progress-indicator">
+            <PdfUIPageNumInput
+              currentPage={this.state.currentPage}
+              numPages={this.state.numPages}
+              docId={this.props.doc.id}
+              onPageChange={this.onPageChange}
+            />
+            of {this.state.numPages}</span>
           |
           <span className="doc-list-progress-indicator">{this.props.docListIsFiltered && <FilterIcon />}
             Document {currentDocIndex + 1} of {this.props.filteredDocIds.length}
@@ -136,7 +148,7 @@ export class PdfUI extends React.Component {
             name="backToDocuments"
             classNames={['cf-pdf-button cf-pdf-cutoff cf-pdf-buttons-left cf-pdf-spaced-buttons']}
             onClick={this.props.onShowList}>
-            <i className="fa fa-chevron-left" aria-hidden="true"></i>
+            <LeftChevron />
             &nbsp; Back to all documents
           </Button> }
         </span>
@@ -212,6 +224,7 @@ export class PdfUI extends React.Component {
           prevDocId={this.props.prevDocId}
           nextDocId={this.props.nextDocId}
           showPdf={this.props.showPdf}
+          resetJumpToPage={this.props.resetJumpToPage}
         />
       </div>
       { this.getPrevPdfDocument(this.props, this.state) }
@@ -227,6 +240,9 @@ const mapStateToProps = (state) => ({
   ...state.ui.pdf
 });
 const mapDispatchToProps = (dispatch) => ({
+  resetJumpToPage: () => {
+    dispatch(resetJumpToPage());
+  },
   stopPlacingAnnotation: () => {
     dispatch(stopPlacingAnnotation());
   },
@@ -256,7 +272,6 @@ PdfUI.propTypes = {
   pdfWorker: PropTypes.string.isRequired,
   onPageClick: PropTypes.func,
   onShowList: PropTypes.func,
-  onCommentScrolledTo: PropTypes.func,
   handleTogglePdfSidebar: PropTypes.func,
   nextDocId: PropTypes.number,
   prevDocId: PropTypes.number,

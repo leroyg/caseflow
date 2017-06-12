@@ -114,7 +114,6 @@ export class PdfViewer extends React.Component {
             showDocumentsListNavigation={this.showDocumentsListNavigation()}
             onViewPortCreated={this.onViewPortCreated}
             onViewPortsCleared={this.onViewPortsCleared}
-            onCommentScrolledTo={this.props.onCommentScrolledTo}
           />
           <PdfSidebar
             addNewTag={this.props.addNewTag}
@@ -173,7 +172,6 @@ PdfViewer.propTypes = {
   }),
   deleteAnnotationModalIsOpenFor: PropTypes.number,
   onScrollToComment: PropTypes.func,
-  onCommentScrolledTo: PropTypes.func,
   handleSelectCommentIcon: PropTypes.func,
   documents: PropTypes.array.isRequired,
   allDocuments: PropTypes.array.isRequired,
