@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
-  host: localhost
+  host: <%= ENV["POSTGRES_HOST"] %>
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV["DB_CONN_POOL_MAX_SIZE"] || 5 %>
