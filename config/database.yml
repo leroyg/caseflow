@@ -14,8 +14,8 @@ default: &default
     statement_timeout: 30_000 # 30 seconds
 
 development:
-  <<: *default
-  username: <%= `whoami` %>
+  <<: *default  
+  username: <%= ENV["POSTGRES_USER"] %>
   database: caseflow_certification_development
 
 development_vacols:
@@ -26,7 +26,7 @@ development_vacols:
 
 demo:
   <<: *default
-  username: <%= `whoami` %>
+  username: <%= ENV["POSTGRES_USER"] %>
   database: caseflow_certification_demo
 
 demo_vacols:
@@ -37,7 +37,7 @@ demo_vacols:
 
 staging:
   <<: *default
-  username: <%= `whoami` %>
+  username: <%= ENV["POSTGRES_USER"] %>
   database: caseflow_certification_staging
 
 # For connecting to the DEV VACOLS Database
@@ -67,7 +67,7 @@ production_vacols:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: postgres
+  username: <%= ENV["POSTGRES_USER"] %>
   database: caseflow_certification_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 test_vacols:
